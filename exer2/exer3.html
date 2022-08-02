@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="500" style="border: 1px solid">
+</canvas>
+<script>
+var canvas = document.getElementById("myCanvas"); // Busca o elemento Canvas no HTML pelo seu ID
+var ctx = canvas.getContext("2d"); // Define a variável que recebe o contexto de manipulação do Canvas
+var imagem = ctx.createImageData(450, 450); // Cria uma variável do tipo imagem com 450 x 450px
+var imageWidth = imagem.width;
+var imageHeight = imagem.height;
+
+for(var y = 0; y < imageHeight; y++) {
+  for(var x = 0; x < imageWidth; x++) {
+    if(y%2){
+    imagem.data[((imageWidth * y) + x) * 4] = 255;
+    imagem.data[((imageWidth * y) + x) * 4 + 1] = 255;
+    imagem.data[((imageWidth * y) + x) * 4 + 2] = 255;
+    imagem.data[((imageWidth * y) + x) * 4 + 3] = 255;
+  } else {
+    imagem.data[((imageWidth * y) + x) * 4] = 0;
+    imagem.data[((imageWidth * y) + x) * 4 + 1] = 0;
+    imagem.data[((imageWidth * y) + x) * 4 + 2] = 0;
+    imagem.data[((imageWidth * y) + x) * 4 + 3] = 255;
+  }
+  }
+}
+ctx.putImageData(imagem, 25,25); // Escreve os valores armazenados em imagem na tela a partir do ponto (25,25)
+</script>
+</body>
+</html>
+

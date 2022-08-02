@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<title>Exercicios aula 07 - Processamento de imagens</title>
+<head>
+</head>
+<body onload="brilho()" style="background:cyan;">
+	
+<div style="border: 3px solid;background:yellow;text-align:center;width:666.67px">
+	<div style="border: 3px solid;background:Lightgreen;">
+		<h3>CONTROLE DE FILTROS </h3>		
+	</div>
+	
+	<div>
+		<label>LINEAR: </label>
+		<input  id="mylimiar" type="range" name="limiar" onchange="limiar()"  min="0" max="255" /> &nbsp &nbsp
+		<input  id="mynega" value="NEGATIVO" type="button" name="negativo" onclick="negativo()" />		
+	</div>	
+	
+	<div>
+		<label>SOLARIZAR: </label>
+		<input  id="mysolar" type="range" name="solar" onchange="solar()" value="0" min="0" max="255" />		
+	</div>
+	
+	<div>
+		<label >BRILHO: </label>
+		<input  id="mybrilho" type="range" name="brilho" onchange="brilho()" value="0" min="0" max="510" />&nbsp &nbsp
+		<input  id="mynega" value="RESET" type="button" name="negativo" onclick="window.location.reload()" />		
+	</div>
+	
+	<div>
+		<label>CONTRASTE: </label>
+		<input  id="mycontra" type="range" name="contraste" onchange="brilho()" value="0" min="0" max="510" />		
+	</div>
+	
+	<div>
+		<label>POSTERIZAR: </label>
+		<input  id="mypost" value="POSTERIZAR" type="range" name="contraste" onchange="posterize()" onclick="posterize()" value="8" min="2" max="20" />&nbsp &nbsp
+		<label >OPACO: </label>
+		<input  id="myopaco"  type="checkbox"  onchange="posterize()" checked />
+		</p>
+	</div>
+	
+</div>
+<div>
+<canvas id="canvas" width="1337.34" height="444.34" style="border: 3px solid;background:black;">
+</canvas>
+
+<script>
+
+function brilho() {
+	var img = new Image();
+	img.src = 'convento.jpg';
+	var canvas = document.getElementById('canvas'); 
+	var ctx = canvas.getContext('2d');
+	img.onload = function() { 
+		ctx.drawImage(img, 0, 0,666.67,444.34); 
+		var copy=ctx.getImageData(0,0,canvas.width,canvas.height); 
+		var imgData=copy.data; 
+		var contra = document.getElementById("mycontra").value;
+		var brilho = document.getElementById("mybrilho").value;
+		
+		for (var i = 0; i < imgData.length; i+=4){
+			imgData[i] = imgData[i]+(brilho/2) - (contra/2); 
+			imgData[i+1] = imgData[i+1]+(brilho/2) - (contra/2); 
+			imgData[i+2] = imgData[i+2]+(brilho/2) - (contra/2);
+		}
+		ctx.putImageData(copy, 670.67,0);
+	}
+}
+
+function limiar() {
+	var img = new Image();
+	img.src = 'convento.jpg';
+	var canvas = document.getElementById('canvas'); 
+	var ctx = canvas.getContext('2d');
+	img.onload = function() { 
+		ctx.drawImage(img, 0, 0,666.67,444.34);
+		var limiar = document.getElementById("mylimiar").value;
+		var copy=ctx.getImageData(0,0,canvas.width,canvas.height); 
+		var imgData=copy.data; 
+		
+		for (var i = 0; i < imgData.length; i+=4){ 
+			var r = imgData[i];
+			var g = imgData[i+1]; 
+			var b = imgData[i+2]; 
+			var v = (0.2126*r + 0.7152*g + 0.0722*b >= limiar) ? 255 : 0;
+			imgData[i] = imgData[i+1] = imgData[i+2] = v; 
+		}
+		ctx.putImageData(copy, 670.67,0);
+	}
+}
+
+function negativo() {
+	var img = new Image();
+	img.src = 'convento.jpg';
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d'); 
+	img.onload = function() { 
+		ctx.drawImage(img, 0, 0,666.67,444.34);
+		var copy=ctx.getImageData(0,0,canvas.width,canvas.height);
+		var imgData=copy.data; 
+		
+		for (var i = 0; i < imgData.length; i+=4){ 
+			imgData[i] = 255 - imgData[i] ; 
+			imgData[i+1] = 255 - imgData[i+1]; 
+			imgData[i+2] = 255 - imgData[i+2]; 
+		}
+		ctx.putImageData(copy, 670.67,0);
+	}
+}
+
+function solar() {
+	var img = new Image();
+	img.src = 'convento.jpg';
+	var canvas = document.getElementById('canvas'); 
+	var ctx = canvas.getContext('2d');
+	img.onload = function() { 
+		ctx.drawImage(img, 0, 0,666.67,444.34);
+		var limiar = document.getElementById("mysolar").value;
+		limiar = 255 - limiar;
+		var copy=ctx.getImageData(0,0,canvas.width,canvas.height); 
+		var imgData=copy.data;
+	  
+		for (var i = 0; i < imgData.length; i+=4){
+			var r = imgData[i]; 
+			var g = imgData[i+1]; 
+			var b = imgData[i+2];
+			var v = 0.2126*r + 0.7152*g + 0.0722*b;
+			
+			if(limiar < v){
+				imgData[i] = 255 - imgData[i] ; 
+				imgData[i+1] = 255 - imgData[i+1]; 
+				imgData[i+2] = 255 - imgData[i+2];
+			}   
+		}
+		ctx.putImageData(copy, 670.67,0);
+	}
+}
+
+function posterize() {
+	var img = new Image();
+	img.src = 'convento.jpg';
+	var canvas = document.getElementById('canvas'); 
+	var ctx = canvas.getContext('2d'); 
+	img.onload = function() { 
+		ctx.drawImage(img, 0, 0,666.67,444.34);
+		var copy=ctx.getImageData(0,0,canvas.width,canvas.height);
+		var imgData=copy.data; 
+		var limiar = document.getElementById("mypost").value;
+		var weights = [-1,-1,-1,-1,-1,-1,limiar,-1,-1,-1,-1-1,-1,]; 
+		var opaque = document.getElementById("myopaco").checked;
+		var side = Math.round(Math.sqrt(weights.length));
+		var halfSide = Math.floor(side/2);
+		var sw = copy.width;
+		var sh = copy.height;
+		var w = sw;
+		var h = sh;	
+		var alphaFac = opaque ? 1 : 0;  
+		
+		for (var y=0; y<h; y++) {
+			for (var x=0; x<w; x++) {
+				var sy = y;
+				var sx = x;
+				var d = (y*w+x)*4;
+				var r=0, g=0, b=0, a=0;			
+				
+				for (var cy=0; cy<side; cy++) {
+					for (var cx=0; cx<side; cx++) {
+						var scy = Math.min(sh-1, Math.max(0, sy + cy - halfSide));
+						var scx = Math.min(sw-1, Math.max(0, sx + cx - halfSide));
+						var z = (scy*sw+scx)*4;
+						var wt = weights[cy*side+cx];
+  
+						r += imgData[z] * wt; 
+						g += imgData[z+1]* wt; 
+						b += imgData[z+2]* wt; 
+						a += imgData[z+3]* wt;
+				
+					}
+				}		
+				imgData[d] = r ; 
+				imgData[d+1] = g ; 
+				imgData[d+2] = b; 
+				imgData[d+3] = a + alphaFac*(255-a);
+			}   
+		}	
+		ctx.putImageData(copy, 670.67,0);
+	}
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="330" height="330" style="border:1px solid #d3d3d3;"></canvas>
+
+<script>
+
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+var i=0,j=0;
+var lag =0;
+var alt=0;
+
+for(j=0;j<8;j++){
+if(j%2==0){
+lag=40;
+}
+for(i=0;i<4;i++){
+ctx.beginPath();
+ctx.rect(0+lag,0+alt, 40, 40);
+ctx.fillStyle = "black";
+ctx.fill();
+lag+=80;
+}
+lag=0;
+alt+=40;
+}
+
+ctx.strokeRect(0,0,320,320);
+
+
+</script> 
+<p><h3>Aula de Canvas</h3></p>
+<p><h3>Exercicio 6</h3></p>
+
+</body>
+</html>

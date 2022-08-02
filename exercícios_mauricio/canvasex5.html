@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="450" height="250" style="border:3px solid #d3d3d3;"></canvas>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+// 
+var lados = 3;
+var segmento = 40;
+var x =20;
+var y =10;
+var i =0;
+var cor ='blue';
+var espe = 3;
+
+	
+    
+	ctx.beginPath();
+    ctx.moveTo(20,80);
+	for(i=0;i<lados-1;i++){
+    ctx.lineTo(x + segmento, y + segmento);
+	x = y + segmento;	
+	y += segmento ;
+	};
+    ctx.closePath();
+	ctx.strokeStyle = cor;
+	ctx.lineWidth = espe;
+    ctx.stroke();
+	
+
+</script> 
+<p><h3>Aula de Canvas</h3></p>
+<p><h3>Exercicio 5</h3></p>
+
+</body>
+</html>
+
+
+
+ 

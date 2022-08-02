@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+<canvas id="canvas" width="500" height="1000" style="border: 1px solid">
+</canvas>
+<script>
+var img = new Image();
+img.src = 'bruno.jpg';
+var canvas = document.getElementById('canvas'); // Busca o elemento Canvas no HTML pelo seu ID
+var ctx = canvas.getContext('2d'); // Define a variável que recebe o contexto de manipulação do Canvas
+img.onload = function() { //Chama a função assim que o evento de carregamento da imagem ocorrer
+  ctx.drawImage(img, 25, 25,450,450); //Apresenta a imagem na tela
+  var copy=ctx.getImageData(0,0,canvas.width,canvas.height); //Recebe os dados dos pixels escritos na tela
+  var imgData=copy.data; //Copia os valores de pixel da variável copy para a variáel imgData
+  for (var i = 0; i < imgData.length; i+=4){ // Corre por todos os valores de pixel da imagem
+    var r = imgData[i]; // Define a variável r com o primeiro valor no pixel na posição atual no Array de pixels
+    var g = imgData[i+1]; // Define a variável g com o segundo valor no pixel na posição atual no Array de pixels
+    var b = imgData[i+2]; // Define a variável b com o terceiro valor no pixel na posição atual no Array de pixels
+
+    var grey = (0.2126*r + 0.7152*g + 0.0722*b); //Converte para escala de cinza de acordo com os pesos de cada canal
+
+    imgData[i] = grey; // Define o valor da primeira posição no pixel atual no Array de pixels para grey
+    imgData[i+1] = grey; // Define o valor da segunda posição no pixel atual no Array de pixels para grey
+    imgData[i+2] = grey; // Define o valor da terceira posição no pixel atual no Array de pixels para grey
+  }
+  ctx.putImageData(copy,0,475); // Escreve os valores armazenados em imagem na tela a partir do ponto (25,25)
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+ <script>
+ var ctx = new AudioContext();
+ var gainNode = ctx .createGain();
+ gainNode.connect(ctx.destination);
+ function play(node,frequency,start ,length){
+ var o= connect (node);
+ o= frequency.value = frequency;
+ node.gain.setValueArTime(0 ,start);
+ node.gain.setValueArTime(1,start + length * 0.9);
+ node.gain.linearRamoToValueArTime(0,start + length * 0.99);
+ o.start (start);
+ o.stop(start +length);
+ }
+ play(gainNode,274.17 ,ctx.currenTime +0.0, 0.2);
+      </script> 
+    </body>
+</html>

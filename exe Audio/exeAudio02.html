@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+ <script>
+ var ctx = new AudioContext();
+ var ol.connect(ctx.destination);
+ ol.frequency.value=270;
+ ol.start(ctx.currentTime);
+ ol.stop(ctx.currentTime + 0.5);
+ 
+ var o2 =ctx.createOscillator();
+ o2.connect(ctx.destination);
+ o2.frequency.value =300;
+ o2.start(ctx.currentTime + 0.5);
+ o2.stop(ctx.currentTime + 1);
+ 
+  
+ var o3 =ctx.createOscillator();
+ o3.connect(ctx.destination);
+ o3.frequency.value =300;
+ o3.start(ctx.currentTime + 1);
+ o3.stop(ctx.currentTime + 1.5);
+ 
+</script> 
+</body>
+</html>
+ 

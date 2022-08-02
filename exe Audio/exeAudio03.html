@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script> 
+var ctx =new AudioContext();
+function play (node,frequency ,start ,length){
+//note quando passamos a variavel para a função para o play  que iremos executar
+var o= node.context.createOscillator();
+o.connect(node);
+o.frequency.value=frequency;
+o.start(start);
+o.stop(start + length);
+}
+play(ctx.destination,274.17,ctx.currentTime +0.0 ,0.2);
+play(ctx.destination,308.06,ctx.currentTime +0.2 ,0.2);
+play(ctx.destination,316.13,ctx.currentTime +0.4 ,0.2);
+play(ctx.destination,366.90,ctx.currentTime +0.6 ,0.2);
+ </script> 
+ </body>
+</html>
